@@ -1,0 +1,348 @@
+
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f5f3ee;--card:#fff;--ink:#1d211f;--mute:#6b736e;--line:#e6e2d8;--green:#12a150;--greend:#0b7a3b;--soft:#e5f5ea;--hero:#14110f;--field:#fff;--warm:#ff7a1a;--red:#d62828;--offre1:#ffe9e4;--serif:"Playfair Display",Georgia,"Times New Roman",serif;--sans:"Poppins","Trebuchet MS","Segoe UI",system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#100f0d;--card:#1a1815;--ink:#f3efe8;--mute:#a39e94;--line:#2c2924;--soft:#15301f;--field:#13120f;--red:#ff6b6b;--offre1:#3a1c18}}
+:root[data-theme="dark"]{--bg:#100f0d;--card:#1a1815;--ink:#f3efe8;--mute:#a39e94;--line:#2c2924;--soft:#15301f;--field:#13120f;--red:#ff6b6b;--offre1:#3a1c18}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.45}
+.wrap{max-width:1120px;margin:0 auto}
+header{background:radial-gradient(120% 140% at 85% 0%,#5a2a0c 0%,var(--hero) 55%);color:#fff;padding:18px 16px 28px;position:relative;overflow:hidden}
+/* DERNIÈRE MODIFICATION : chemin du logo corrigé (../photos/ car ce fichier est dans le dossier csslove) */
+header::before{content:"";position:absolute;top:0;right:0;bottom:0;width:62%;background:url("../photos/logo.png") right center/cover no-repeat,url("../photos/logo.jpg") right center/cover no-repeat;z-index:0}
+header::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--hero) 0%,rgba(20,17,15,.94) 45%,rgba(20,17,15,.6) 55%,rgba(20,17,15,0) 85%);z-index:1}
+header .wrap{position:relative;z-index:2}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.brand{font-family:var(--serif);font-size:32px;font-weight:700;font-style:italic;letter-spacing:-.5px}
+.brand b{color:#ff4d4f}
+.brand small{display:block;font-family:var(--sans);font-size:12px;font-style:normal;font-weight:400;opacity:.8;letter-spacing:0}
+.status{display:inline-flex;gap:8px;align-items:center;background:#ffffff1c;border-radius:99px;padding:6px 12px;font-size:13px}
+.dot{width:9px;height:9px;border-radius:50%;background:#4be184;box-shadow:0 0 0 4px #4be18433}
+.dot.off{background:#ff6b6b;box-shadow:0 0 0 4px #ff6b6b33}
+header h1{font-family:var(--serif);font-size:clamp(28px,5vw,44px);line-height:1.1;margin:26px 0 8px;max-width:16ch}
+header p{margin:0 0 14px;opacity:.85;max-width:44ch}
+.chips{display:flex;gap:8px;flex-wrap:wrap;font-size:13px}
+/* DERNIÈRE MODIFICATION : infos de l'en-tête en style "verre" */
+.chips span{background:#ffffff1c;border:1px solid #ffffff26;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-radius:99px;padding:6px 12px}
+main.wrap{display:grid;grid-template-columns:1fr 350px;gap:22px;padding:16px;align-items:start}
+/* DERNIÈRE MODIFICATION : barre de recherche avec loupe, arrondie, avec ombre */
+.search{width:100%;border:1px solid var(--line);background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") no-repeat 15px center;color:var(--ink);border-radius:99px;padding:13px 16px 13px 44px;font:inherit;margin-bottom:12px;box-shadow:0 4px 14px #0000000d}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5;padding-top:6px}
+/* DERNIÈRE MODIFICATION : onglets avec emojis, onglet actif en dégradé rouge-orange */
+.tab{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:9px 16px;font:inherit;font-weight:500;cursor:pointer;transition:background .2s,box-shadow .2s}
+.tab[aria-pressed="true"]{background:linear-gradient(135deg,#ff4d4f,var(--warm));color:#fff;border-color:transparent;box-shadow:0 6px 16px #ff4d4f44}
+h2{font-family:var(--serif);font-size:22px;margin:22px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:14px}
+/* DERNIÈRE MODIFICATION : cartes de plats plus arrondies, avec ombre douce */
+.item{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 4px 14px #0000000f;transition:transform .25s,box-shadow .25s}
+.ph{position:relative;aspect-ratio:1/1;overflow:hidden;display:grid;place-items:center;font-size:56px;background:linear-gradient(135deg,var(--g1),var(--g2))}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.badge{position:absolute;top:10px;left:10px;background:linear-gradient(135deg,#ff4d4f,var(--warm));color:#fff;font-size:11px;font-weight:600;border-radius:99px;padding:4px 10px;z-index:1;box-shadow:0 4px 10px #0003}
+.body{padding:10px 12px 12px;display:flex;flex-direction:column;flex:1}
+.item h3{font-size:14.5px;font-weight:600;margin:0}
+.desc{font-size:12px;color:var(--mute);margin:2px 0 6px;flex:1}
+.price{color:var(--greend);font-weight:700;font-size:16px}
+:root[data-theme="dark"] .price{color:#4be184}
+.qty{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.qty button{width:34px;height:34px;border-radius:50%;border:0;font-size:19px;cursor:pointer;background:var(--line);color:var(--ink)}
+.qty .plus{background:var(--green);color:#fff}
+.qty span{font-weight:800;min-width:22px;text-align:center}
+.none{color:var(--mute);padding:14px 0}
+aside{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:0 8px 28px #0000001a;position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px)}
+aside h2{margin:0 0 2px;font-size:20px}
+.sub{color:var(--mute);font-size:13px;margin:0 0 10px}
+.close{display:none}
+/* DERNIÈRE MODIFICATION : lignes du panier en mini-cartes (photo, nom, choix, quantité, prix) */
+.line{display:flex;align-items:flex-start;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
+/* DERNIÈRE MODIFICATION : bouton corbeille un peu plus grand */
+.line button{border:0;background:none;color:var(--mute);cursor:pointer;font-size:18px;padding:0 2px}
+.empty{text-align:center;padding:22px 8px 14px}
+.row{display:flex;justify-content:space-between;font-size:14px;color:var(--mute);padding:4px 0}
+/* DERNIÈRE MODIFICATION : bloc Total en dégradé, montant plus grand */
+.total{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,var(--soft),var(--card));border:1px solid #12a15055;border-radius:14px;padding:13px 14px;font-weight:700;margin:8px 0 6px}
+label{display:block;font-size:13px;margin:10px 0 4px}
+input,textarea{width:100%;border:1px solid var(--line);background:var(--field);color:var(--ink);border-radius:10px;padding:11px;font:inherit}
+input:focus-visible,button:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+.gps{width:100%;border:1px dashed var(--green);border-radius:10px;background:transparent;color:var(--red);padding:10px;font:inherit;font-weight:700;cursor:pointer}
+.gps.ok{background:var(--green);color:#fff;border-style:solid}
+.send{width:100%;margin-top:14px;border:0;border-radius:12px;background:var(--green);color:#fff;padding:14px;font:inherit;font-weight:800;font-size:16px;cursor:pointer}
+.send small{display:block;font-weight:400;font-size:12px;opacity:.9}
+.err{color:#d93a3a;font-size:13px;min-height:18px;margin-top:8px}
+.note{font-size:12px;color:var(--mute);margin:8px 0 0}
+.bar{display:none}
+.wa{position:fixed;right:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);width:54px;height:54px;border-radius:50%;background:#25d366;color:#fff;display:grid;place-items:center;font-size:26px;text-decoration:none;box-shadow:0 6px 18px #0004;z-index:20}
+footer{background:var(--hero);color:#fff;padding:20px 16px 90px;font-size:13px}
+footer .wrap{display:flex;gap:10px 32px;flex-wrap:wrap;justify-content:space-between}
+.done{position:fixed;inset:0;background:#000a;display:none;place-items:center;z-index:50;padding:20px}
+.done.show{display:grid}
+
+/* DERNIÈRE MODIFICATION : le style de la fenêtre de choix (.opt, .o) et le bouton grisé sont nouveaux */
+.done>div{background:var(--card);border-radius:18px;padding:24px;max-width:360px;width:100%;text-align:center;max-height:90vh;overflow:auto}
+.done button{margin-top:12px;border:0;border-radius:10px;background:var(--green);color:#fff;padding:10px 20px;font:inherit;cursor:pointer}
+.done button:disabled{opacity:.4;cursor:not-allowed}
+.done button.gray{background:var(--line);color:var(--ink)}
+.opt{text-align:left!important}
+.opt h2{margin:0 0 8px}
+.opt b{display:block;margin-top:12px}
+.o{display:flex;align-items:center;gap:8px;margin:0;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px;cursor:pointer}
+.o input{width:auto;margin:0}
+.opt .acts{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+@media (max-width:860px){
+ main.wrap{grid-template-columns:1fr}
+ aside{position:fixed;left:0;right:0;bottom:0;top:auto;max-height:88%;overflow:auto;border-radius:20px 20px 0 0;z-index:40;transform:translateY(105%);transition:transform .3s;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 16px)}
+ aside.open{transform:none;box-shadow:0 -10px 40px #0006}
+ .close{display:block;float:right;border:0;background:var(--line);color:var(--ink);width:32px;height:32px;border-radius:50%;cursor:pointer}
+ .bar{display:flex;justify-content:space-between;align-items:center;position:fixed;left:12px;right:80px;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);background:var(--green);color:#fff;border:0;border-radius:16px;padding:15px 18px;font:inherit;font-weight:800;z-index:20;cursor:pointer;box-shadow:0 6px 18px #0004}
+ .grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:600px){header::before{width:100%}header::after{background:linear-gradient(90deg,rgba(20,17,15,.95) 0%,rgba(20,17,15,.8) 55%,rgba(20,17,15,.35) 100%)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* DERNIÈRE MODIFICATION : offres en barres, côte à côte (même forme que la barre de recherche) */
+.offres{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.offre{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,var(--offre1),var(--card) 65%);border:1px solid var(--line);border-left:4px solid #ff4d4f;border-radius:18px;padding:12px;min-width:0;box-shadow:0 4px 14px #0000000f}
+.oph{position:relative;flex:0 0 72px;height:72px;border-radius:14px;overflow:hidden;display:grid;place-items:center;font-size:18px;line-height:1;background:linear-gradient(135deg,#ffd0d0,#ff6b6b)}
+.oph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.obody{flex:1;min-width:0}
+.obody h3{font-size:14.5px;font-weight:600;margin:0}
+.obody .desc{font-size:11px;margin:2px 0}
+.offre .qty{margin:0;gap:8px}
+@media (max-width:600px){
+ .offre{flex-wrap:wrap}
+ .offre .qty{width:100%}
+}
+
+/* DERNIÈRE MODIFICATION : nouveau style du pied de page (remplace tout l'ancien bloc .footer-section) */
+.site-footer{
+  position:relative;
+  margin-top:32px;
+  background:var(--hero);
+  color:#d9d4ca;
+  font-size:14px;
+  padding:0 16px calc(84px + env(safe-area-inset-bottom,0px));
+}
+.site-footer::before{
+  content:"";
+  display:block;
+  height:4px;
+  margin:0 -16px 40px;
+  background:linear-gradient(90deg,#ff4d4f,var(--warm),#4be184);
+}
+.ft-grid{
+  max-width:1120px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr;
+  gap:36px;
+}
+.ft-logo{
+  font-family:var(--serif);
+  font-size:30px;
+  font-style:italic;
+  font-weight:700;
+  color:#fff;
+  letter-spacing:-.5px;
+}
+.ft-logo b{color:#ff4d4f}
+.ft-brand p{margin:8px 0 16px;max-width:36ch;line-height:1.55;color:#bdb7ac}
+.site-footer h4{
+  margin:0 0 14px;
+  color:#fff;
+  font-size:13px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.site-footer ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.site-footer li{line-height:1.45}
+.site-footer a{color:#fff;text-decoration:none}
+.site-footer li a:hover{color:#4be184;text-decoration:underline}
+.ft-wa{
+  display:inline-block;
+  background:#25d366;
+  color:#fff !important;
+  font-weight:700;
+  padding:11px 18px;
+  border-radius:99px;
+  transition:transform .2s,box-shadow .2s;
+}
+.ft-wa:hover{transform:translateY(-2px);box-shadow:0 8px 20px #25d36655}
+.ft-bottom{
+  max-width:1120px;
+  margin:36px auto 0;
+  padding-top:18px;
+  border-top:1px solid #ffffff22;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px 20px;
+  flex-wrap:wrap;
+}
+.ft-bottom p{margin:0;color:#a39e94;font-size:13px}
+.ft-credit{
+  font-size:13px;
+  padding:7px 14px;
+  border:1px solid #ffffff33;
+  border-radius:99px;
+  transition:background .25s,border-color .25s;
+}
+.ft-credit:hover{background:#4be184;border-color:#4be184;color:#0b2a18}
+
+@media (max-width:860px){
+  .ft-grid{grid-template-columns:1fr 1fr}
+  .ft-brand{grid-column:1 / -1}
+}
+@media (max-width:600px){
+  .ft-grid{grid-template-columns:1fr;gap:28px}
+  .ft-bottom{flex-direction:column;text-align:center}
+}
+
+/* ===== DERNIÈRE MODIFICATION : design moderne (nouveautés regroupées ici, faciles à retrouver) ===== */
+
+/* bouton "Commander maintenant" dans l'en-tête */
+.cta{display:inline-block;margin:2px 0 16px;padding:12px 22px;border-radius:99px;background:linear-gradient(135deg,#ff4d4f,var(--warm));color:#fff;font-weight:600;text-decoration:none;box-shadow:0 8px 22px #ff4d4f55;transition:transform .2s,box-shadow .2s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 12px 28px #ff4d4f66}
+.cta:active{transform:scale(.97)}
+
+/* titres de catégories avec une barre de couleur */
+section h2{display:flex;align-items:center;gap:10px}
+section h2::before{content:"";flex:0 0 5px;height:22px;border-radius:4px;background:linear-gradient(#ff4d4f,var(--warm))}
+
+/* effet au survol (ordinateur seulement) */
+@media (hover:hover){
+ .item:hover{transform:translateY(-4px);box-shadow:0 14px 30px #00000026}
+ .item:hover .ph img{transform:scale(1.07)}
+}
+
+/* le bouton "+" garde son aspect : seulement un petit effet quand on appuie */
+.qty .plus{transition:transform .15s}
+.qty .plus:active{transform:scale(.88)}
+
+/* petit rebond du compteur et de la barre panier quand on ajoute un plat */
+.qty span.bump{animation:bump .35s}
+@keyframes bump{40%{transform:scale(1.5);color:var(--red)}}
+.bar.pulse{animation:pulse .45s}
+@keyframes pulse{40%{transform:scale(1.04)}}
+
+/* message "Ajouté" */
+#toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 86px);transform:translate(-50%,16px);max-width:min(92vw,420px);background:#1d211f;color:#fff;padding:10px 18px;border-radius:99px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 8px 24px #0005}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* petit badge "Offre" dans les bannières */
+.obadge{display:inline-block;font-size:10px;font-weight:700;background:linear-gradient(135deg,#ff4d4f,var(--warm));color:#fff;border-radius:99px;padding:2px 9px;margin-bottom:4px}
+
+/* bouton d'envoi WhatsApp : ombre verte */
+.send{box-shadow:0 8px 20px #12a15044;transition:transform .2s}
+.send:active{transform:scale(.98)}
+
+@media (max-width:600px){
+ .offres{grid-template-columns:1fr}
+ .oph{flex-basis:64px;height:64px}
+ .cta{width:100%;text-align:center}
+}
+
+/* ===== DERNIÈRE MODIFICATION : panier moderne (tout le nouveau style du panier est ici) ===== */
+
+aside h2{display:flex;align-items:center;gap:8px}
+.count{background:linear-gradient(135deg,#ff4d4f,var(--warm));color:#fff;font-family:var(--sans);font-size:12px;font-weight:700;border-radius:99px;padding:2px 9px}
+
+/* lignes du panier */
+.lph{position:relative;flex:0 0 52px;height:52px;border-radius:12px;overflow:hidden;display:grid;place-items:center;font-size:20px;line-height:1;background:linear-gradient(135deg,var(--g1),var(--g2))}
+.lph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.linfo{flex:1;min-width:0}
+.lt{display:flex;justify-content:space-between;align-items:flex-start;gap:6px}
+.lt b{font-weight:600;font-size:13.5px;line-height:1.3}
+.linfo small{display:block;color:var(--mute);font-size:11.5px;line-height:1.35;margin-top:2px}
+.lb{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.lq{display:inline-flex;align-items:center;gap:8px;background:var(--bg);border-radius:99px;padding:3px}
+.line .lq button{width:26px;height:26px;border-radius:50%;border:0;background:var(--card);color:var(--ink);font-size:16px;line-height:1;padding:0;cursor:pointer;box-shadow:0 1px 4px #0002}
+.line .lq button:last-child{background:var(--green);color:#fff}
+.lq span{min-width:18px;text-align:center;font-weight:700;font-size:13px}
+.lp{color:var(--greend);font-weight:700;font-size:14px}
+.clear{display:block;margin:8px 0 8px auto;background:none;border:0;color:var(--mute);font:inherit;font-size:12px;text-decoration:underline;cursor:pointer}
+
+/* panier vide */
+.e-ico{font-size:46px;line-height:1}
+.empty b{display:block;margin-top:8px}
+.empty p{margin:4px 0 14px;color:var(--mute);font-size:13px}
+.e-btn{border:0;border-radius:99px;background:linear-gradient(135deg,#ff4d4f,var(--warm));color:#fff;padding:10px 22px;font:inherit;font-weight:600;cursor:pointer;box-shadow:0 6px 16px #ff4d4f44}
+
+/* total + délai */
+.total #tot{font-size:20px;color:var(--greend)}
+.eta{font-size:12.5px;color:var(--mute);text-align:center;margin:0 0 6px}
+
+/* champs avec icônes et erreurs sous le champ */
+.fld{position:relative}
+.fld .ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:15px;pointer-events:none}
+.fld input{padding:12px 12px 12px 40px;border-radius:12px}
+.fld.bad input{border-color:#d93a3a;box-shadow:0 0 0 3px #d93a3a22}
+.ferr{display:block;color:#d93a3a;font-size:12px;margin-top:4px}
+.ferr:empty{display:none}
+textarea{border-radius:12px;resize:vertical}
+
+/* bouton GPS */
+.gps{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:12px;transition:background .2s}
+.gps:hover{background:var(--soft)}
+.gps.ok:hover{background:var(--green)}
+
+/* bouton WhatsApp avec icône, grisé si panier vide */
+.send .sl{display:flex;align-items:center;justify-content:center;gap:8px}
+.send svg{width:22px;height:22px;fill:currentColor;flex:0 0 auto}
+.send:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+
+/* numéro de commande après l'envoi */
+.oid{background:var(--soft);color:var(--greend);font-weight:700;border-radius:10px;padding:9px 12px;margin:12px 0 0}
+
+/* fond assombri et poignée (téléphone seulement) */
+.overlay{display:none}
+.grip{display:none}
+
+/* contraste des montants verts en mode sombre */
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .price,:root:not([data-theme="light"]) .lp,:root:not([data-theme="light"]) .total #tot,:root:not([data-theme="light"]) .oid{color:#4be184}}
+:root[data-theme="dark"] .lp,:root[data-theme="dark"] .total #tot,:root[data-theme="dark"] .oid{color:#4be184}
+
+@media (max-width:860px){
+ .overlay.show{display:block;position:fixed;inset:0;background:#0008;z-index:39}
+ .grip{display:block;height:26px;margin:-10px 0 2px;touch-action:none;cursor:grab}
+ .grip::after{content:"";display:block;width:44px;height:5px;border-radius:99px;background:var(--line);margin:10px auto 0}
+}
+
+/* DERNIÈRE MODIFICATION : correctifs (plus de débordement sur le côté sur téléphone, panier défilable sur ordinateur) */
+section{min-width:0}
+@media (max-width:860px){
+ main.wrap{grid-template-columns:minmax(0,1fr)}
+}
+@media (min-width:861px){
+ aside{max-height:calc(100vh - 24px - env(safe-area-inset-top,0px));overflow:auto}
+}
+
+/* ===== DERNIÈRE MODIFICATION : envoi WhatsApp plus sûr (confirmation, dernière commande, paiement, appel) ===== */
+
+/* fenêtre de confirmation */
+.dn-acts button{display:block;width:100%}
+.warn{background:#f2b33d26;border:1px solid #f2b33d77;border-radius:10px;padding:9px 11px;font-size:13px;margin:10px 0 0;text-align:left}
+.warn:empty{display:none}
+.done .note{text-align:center}
+
+/* rappel de la dernière commande dans le panier */
+.last:empty{display:none}
+.lastc{border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin:0 0 10px;font-size:13px;display:grid;gap:4px;background:var(--bg)}
+.lastc.wait{border-color:#f2b33d;background:#f2b33d1a}
+.lastc.ok{border-color:#12a15055;background:var(--soft)}
+.lastc span{color:var(--mute);font-size:12px}
+.lacts{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap}
+.lacts button{border:0;border-radius:99px;padding:6px 12px;font:inherit;font-size:12px;cursor:pointer;background:var(--card);color:var(--ink);box-shadow:0 1px 4px #0002}
+
+/* choix du paiement */
+.pay{display:flex;gap:8px}
+.chipopt{flex:1;margin:0;position:relative}
+.chipopt input{position:absolute;opacity:0;width:0;height:0;padding:0;border:0}
+.chipopt span{display:block;text-align:center;border:1px solid var(--line);border-radius:12px;padding:10px 6px;font-size:13px;cursor:pointer;background:var(--field)}
+.chipopt input:checked+span{border-color:var(--green);background:var(--soft);font-weight:600}
+.chipopt input:focus-visible+span{outline:2px solid var(--green);outline-offset:2px}
+
+
+
+/* Rupture de stock : visible sans masquer le catalogue */
+.item.epuise .ph img,.offre.epuise .oph img{filter:grayscale(1);opacity:.55}
+.stock-badge{background:#b42318!important;color:white!important}
+.epuise .price{opacity:.65}
+.qty .plus:disabled{background:#9b9b9b;color:#fff;cursor:not-allowed;opacity:.75}
