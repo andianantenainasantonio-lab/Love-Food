@@ -142,11 +142,11 @@ const PLATS = [
   ]),
   ...M("Tacos", "ta", "🌮", [
     ["Tacos poulet", "Poulet mariné, frites, sauce, fromage locale", 9000, "Populaire"],
-    ["Tacos Carnivore", "Charcuterie bœuf, frites, sauce, fromage locale", 9000],
+    ["Tacos Carnivore", "Viande, frites, sauce, fromage locale", 9000],
     ["Tacos mixte", "Poulet et charcuterie bœuf,fites, sauce, fromage locale", 11000],
     ["Tacos 2fromages", "Poulet et charcuterie bœuf , frites, sauce, fromage locale + fromage qui rit", 13000],
-    ["Croque madame", "Pain de mie, œuf sur plat, charcuterie bœuf, fromage locale", 9000, "Nouveau"],
-    ["Croque monsieur", "Pain de mie, charcuterie bœuf, fromage locale", 8000],
+    ["Croque madame", "Pain de mie, œuf sur plat, charcuterie bœuf, fromage locale", 8500, "Nouveau"],
+    ["Croque monsieur", "Pain de mie, charcuterie bœuf, fromage locale", 7000],
   ]),
   ...M("Paninis et Gratin", "pa", "🥪", [
     ["Panini Gourmande", "Charcuterie bœuf, tomate, sauce, salade, fromage locale", 8000],
@@ -155,17 +155,17 @@ const PLATS = [
   ]),
   // DERNIÈRE MODIFICATION : Sandwichs placés avant "Pao et Pf" (ancien Burgers)
   ...M("Sandwichs", "sa", "🥖", [
-    ["Sandwich Kebab", "Bœuf, tomate, salade, mayonnaise, fromage locale", 9000],
+    ["Sandwich Kebab", "Viande, tomate, salade, mayonnaise, fromage locale", 9000],
     ["Sandwich poulet", "Poulet, tomate, salade, mayonnaise, fromage locale", 9000],
-    ["Sandwich Mixte", "Bœuf, poulet, tomate, salade, mayonnaise, fromage locale", 11000],
-    ["Sandwich Géant", "Sandwich 1 mètre : Bœuf, charcuterie bœuf, salade, mayonnaise, fromage locale ...", 26000,"un jour avant"],
+    ["Sandwich Mixte", "Viande, poulet, tomate, salade, mayonnaise, fromage locale", 11000],
+    ["Sandwich Géant", "Sandwich 1 mètre : Viande, charcuterie bœuf, salade, mayonnaise, fromage locale ...", 26000,"un jour avant"],
   ]),
   ...M("Pao et Pf", "bu", "🍔", [
     ["Pomme frite", "Frites, sauce, mayonnaise", 4000, "Populaire"],
     ["Nuggets poulet + Frite", "Nuggets poulet, frites, sauce, mayonnaise", 9000],
     ["Fromage Pané + Frite", "Fromage Pané, frites, sauce, mayonnaise", 9000],
     ["Pao au poulet", "Pao, poulets, champignions, sauce", 2000, "Nouveau"],
-    ["Pao au fromage", "Pao, poulets, champignions, sauce, fromage locale", 4000, "Populaire"],
+    ["Pao au fromage", "Pao, poulets, champignions, sauce, fromage locale", 2500, "Populaire"],
   ]),
 ];
 
@@ -247,11 +247,11 @@ const BOISSONS = [
     id: "d3",
     n: "Jus naturel",
     e: "🍹",
-    p: 2000,
+    p: 3000,
     g: [
       {
         t: "Parfum du jus",
-        l: [["Ananas"], ["Citron"], ["Goyave"], ["Raisin"]],
+        l: [["Ananas"], ["Citron"], ["Mangue"], ["Fraise"]],
       },
     ],
   },
@@ -259,7 +259,7 @@ const BOISSONS = [
     id: "d4",
     n: "Milk Shake",
     e: "🧋",
-    p: 5000,
+    p: 6000,
     g: [{ t: "Parfum", l: [["Vanille"], ["Choco"], ["Coco"]] }],
   },
 ].map((x) => ({ ...x, c: "Boissons", d: "", b: "" }));
