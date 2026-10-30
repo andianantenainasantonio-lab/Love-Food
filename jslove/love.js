@@ -36,6 +36,7 @@ const PHOTOS = {
   ta4: "photos/ta4.jpg",
   ta5: "photos/ta5.png",
   ta6: "photos/ta6.png",
+  ta7: "photos/ta7.png",
   pa1: "photos/pa1.png",
   pa2: "photos/pa2.png",
   pa3: "photos/pa3.png",
@@ -110,13 +111,13 @@ const PLATS = [
     ],
     [
       "Pizza 4fromages",
-      "Sauce tomate, origan, fromage qui rit, fromages locale, cheddar,mozzarella",
-      20000,
+      "Origan, fromage qui rit,Sauce tomate, fromages locale, cheddar,mozzarella",
+      21000,
     ],
     [
       "Pizza Bolognaise",
       "Viande hachée, Sauce tomate, oignon, origan, fromage locale,",
-      22000,
+      23000,
       "Nouveau",
     ],
     [
@@ -131,41 +132,42 @@ const PLATS = [
     ],
     [
       "Pizza Love Food",
-      "Fromage locale, tomate, poivron, saucisse fumé, sauce tomate, charcuterie, poulet, origan",
+      "Tomate, poivron, saucisse fumé, Fromage locale, sauce tomate, charcuterie, poulet, origan",
       26000,
     ],
     [
       "Pizza Fruit de mer",
-      "Fromage locale, tomate, poivron, fruit de mer (thon), sauce tomate, origan",
+      "Fromage locale, poivron, fruit de mer (thon), sauce tomate, origan, tomate",
       27000,
     ],
   ]),
   ...M("Tacos", "ta", "🌮", [
-    ["Tacos poulet", "Poulet mariné, frites, sauce, fromage locale", 9000, "Populaire"],
-    ["Tacos Carnivore", "Viande, frites, sauce, fromage locale", 9000],
+    ["Tacos poulet", "Poulet mariné, fromage locale, frites, sauce", 9000, "Populaire"],
+    ["Tacos Carnivore", "Frites, sauce, fromage locale, Charcuterie bœuf", 9000],
     ["Tacos mixte", "Poulet et charcuterie bœuf,fites, sauce, fromage locale", 11000],
-    ["Tacos 2fromages", "Poulet et charcuterie bœuf , frites, sauce, fromage locale + fromage qui rit", 13000],
-    ["Croque madame", "Pain de mie, œuf sur plat, charcuterie bœuf, fromage locale", 8500, "Nouveau"],
-    ["Croque monsieur", "Pain de mie, charcuterie bœuf, fromage locale", 7000],
+    ["Tacos 2fromages", "Sauce, Poulet/charcuterie bœuf , frites, fromage locale + fromage qui rit", 13000],
+    ["Tacos 4 fromages", "Poulet et charcuterie bœuf , frites, sauce, fromage locale + fromage qui rit + cheddar +  mozzarella", 14000],
+    ["Croque madame", "Pain de mie, œuf sur plat, charcuterie bœuf, fromage, sauce", 8500, "Nouveau"],
+    ["Croque monsieur", "Pain de mie, charcuterie bœuf, fromage , sauce", 7000],
   ]),
   ...M("Paninis et Gratin", "pa", "🥪", [
-    ["Panini Gourmande", "Charcuterie bœuf, tomate, sauce, salade, fromage locale", 8000],
-    ["Panini 2fromages", "Charcuterie bœuf, tomate, sauce, salade, fromage locale + fromage qui rit", 11000, "Populaire"],
-    ["Gratin au Macaroni", "Macaroni, charcuterie,fromage fondu", 8000],
+    ["Panini Gourmande", "Charcuterie bœuf,  salade, fromage locale, tomate, sauce", 8000],
+    ["Panini 2fromages", "Poulet, tomate, sauce, salade, charcuterie bœuf, fromage locale + fromage qui rit", 12000, "Populaire"],
+    ["Gratin Macaroni", "Macaroni, charcuterie,fromage local, bechamel", 8000],
   ]),
   // DERNIÈRE MODIFICATION : Sandwichs placés avant "Pao et Pf" (ancien Burgers)
   ...M("Sandwichs", "sa", "🥖", [
-    ["Sandwich Kebab", "Viande, tomate, salade, mayonnaise, fromage locale", 9000],
-    ["Sandwich poulet", "Poulet, tomate, salade, mayonnaise, fromage locale", 9000],
-    ["Sandwich Mixte", "Viande, poulet, tomate, salade, mayonnaise, fromage locale", 11000],
-    ["Sandwich Géant", "Sandwich 1 mètre : Viande, charcuterie bœuf, salade, mayonnaise, fromage locale ...", 26000,"un jour avant"],
+    ["Sandwich Kebab", "Viande, tomate, salade, , fromage locale, oignon, mayonnaise", 9000],
+    ["Sandwich poulet", "Poulet, tomate, salade, mayonnaise, oignon, fromage locale", 9000],
+    ["Sandwich Mixte", "Tomate, salade, mayonnaise, oignon, fromage locale, Viande, poulet", 11000],
+    ["Sandwich Géant", "Sandwich 1 mètre : Viande, nuggets poulet , salade, oignon, mayonnaise, poulet, fromage", 26000,"un jour avant"],
   ]),
   ...M("Pao et Pf", "bu", "🍔", [
     ["Pomme frite", "Frites, sauce, mayonnaise", 4000, "Populaire"],
-    ["Nuggets poulet + Frite", "Nuggets poulet, frites, sauce, mayonnaise", 9000],
-    ["Fromage Pané + Frite", "Fromage Pané, frites, sauce, mayonnaise", 9000],
-    ["Pao au poulet", "Pao, poulets, champignions, sauce", 2000, "Nouveau"],
-    ["Pao au fromage", "Pao, poulets, champignions, sauce, fromage locale", 2500, "Populaire"],
+    ["Nuggets poulet + Frite", "Nuggets poulet, mayonnaise, frites, sauce", 9000],
+    ["Fromage Pané + Frite", "Frites, fromage Pané, sauce, mayonnaise", 9000],
+    ["Pao au poulet", "Poulets, champignions, sauce", 2000, "Nouveau"],
+    ["Pao au fromage", "Fromage locale, poulets, sauce, champignions", 2500, "Populaire"],
   ]),
 ];
 
@@ -251,7 +253,7 @@ const BOISSONS = [
     g: [
       {
         t: "Parfum du jus",
-        l: [["Ananas"], ["Citron"], ["Mangue"], ["Fraise"]],
+        l: [["Corossol"], ["Mangue"]],
       },
     ],
   },
@@ -260,7 +262,7 @@ const BOISSONS = [
     n: "Milk Shake",
     e: "🧋",
     p: 6000,
-    g: [{ t: "Parfum", l: [["Vanille"], ["Choco"], ["Coco"]] }],
+    g: [{ t: "Parfum", l: [["Choco"]] }],
   },
 ].map((x) => ({ ...x, c: "Boissons", d: "", b: "" }));
 
