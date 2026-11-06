@@ -13,7 +13,7 @@ const PRIX_OFFRE_2_TACOS = 22000,
   TACOS_OFFRE1 = "2 Tacos carnivore";
 // Gestion manuelle : ajoutez ici les identifiants des produits épuisés.
 // Exemple : "pi1" = Margherita, "ta1" = Tacos poulet, "d3" = Jus naturel.
-const PRODUITS_EPUISES = new Set(["pi7"]);
+const PRODUITS_EPUISES = new Set(["o2"]);
 const estEpuise = (id) => PRODUITS_EPUISES.has(id);
 
 // DERNIÈRE MODIFICATION : chemins corrigés (sans "/" au début) + images des offres o1 et o2
