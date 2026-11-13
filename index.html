@@ -32,11 +32,11 @@
       content="Une petite faim ? Découvrez notre menu, choisissez vos plats préférés et commandez directement sur WhatsApp !"
     />
 
-    <meta property="og:url" content="https://andianantenainasantonio-lab.github.io/Love-Food/" />
+    <meta property="og:url" content="https://TON-PSEUDO.github.io/love-food/" />
 
     <meta
       property="og:image"
-      content="https://andianantenainasantonio-lab.github.io/Love-Food/photos/partage-facebook.jpg"
+      content="https://TON-PSEUDO.github.io/love-food/photos/partage-facebook.jpg"
     />
 
     <meta property="og:image:width" content="1200" />
@@ -137,16 +137,58 @@
           <input id="nom" placeholder="Ex : Tata" autocomplete="name" />
         </div>
         <small class="ferr" id="e-nom"></small>
-        <label for="adr">Adresse de livraison (obligatoire)</label>
-        <div class="fld" id="f-adr">
+        <!-- DERNIÈRE MODIFICATION : quartier de livraison (liste déroulante avec recherche) puis adresse précise ; les frais de livraison dépendent du quartier -->
+        <label for="quartier">Quartier de livraison (obligatoire)</label>
+        <div class="fld combo" id="f-quartier">
           <span class="ico">📍</span>
           <input
-            id="adr"
-            placeholder="Ex : Tanambao verrerie, devant CSB2"
-            autocomplete="street-address"
+            id="quartier"
+            type="text"
+            role="combobox"
+            aria-expanded="false"
+            aria-controls="q-list"
+            aria-autocomplete="list"
+            aria-haspopup="listbox"
+            placeholder="Choisir ou rechercher un quartier"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
           />
+          <button
+            class="combo-btn"
+            id="q-toggle"
+            type="button"
+            tabindex="-1"
+            aria-label="Afficher la liste des quartiers"
+          >
+            ▾
+          </button>
+          <ul
+            class="combo-list"
+            id="q-list"
+            role="listbox"
+            aria-label="Quartiers de livraison"
+            hidden
+          ></ul>
         </div>
-        <small class="ferr" id="e-adr"></small>
+        <small class="ferr" id="e-quartier"></small>
+        <div class="fee-info" id="fee-info" hidden></div>
+        <!-- Ce 2e champ apparaît automatiquement après le choix du quartier -->
+        <div id="adr-wrap" hidden>
+          <label for="adr">Adresse précise (obligatoire)</label>
+          <div class="fld" id="f-adr">
+            <span class="ico">🏠</span>
+            <input
+              id="adr"
+              placeholder="Ex : Devant CSB2, près de la pharmacie"
+              autocomplete="street-address"
+            />
+          </div>
+          <small class="ferr" id="e-adr"></small>
+          <small class="fhelp"
+            >Nom de rue, numéro de maison, bâtiment, repère, emplacement…</small
+          >
+        </div>
         <!-- DERNIÈRE MODIFICATION : le numéro est maintenant obligatoire -->
         <label for="tel">Autre numéro (obligatoire)</label>
         <div class="fld" id="f-tel">
@@ -189,6 +231,8 @@
           >
         </div>
         <div class="err" id="err" role="alert"></div>
+        <!-- DERNIÈRE MODIFICATION : explique pourquoi le bouton est bloqué (quartier ou adresse précise manquant) -->
+        <p class="note" id="send-hint" hidden></p>
         <button class="send" id="send" type="button">
           <span class="sl"
             ><svg viewBox="0 0 24 24" aria-hidden="true">
