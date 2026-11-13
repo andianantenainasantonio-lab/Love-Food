@@ -1,10 +1,74 @@
 // ===== PARTIE À MODIFIER : réglages de l'entreprise =====
 const WHATSAPP_NUMBER = "261349164249"; // 034 91 642 49 en format international
 const TEL_AFFICHE = "034 91 642 49"; // numéro affiché aux clients
-const DELIVERY_FEE = 3000,
+const FRAIS_LIVRAISON_DEFAUT = 4000,
   NOM = "Love Food",
   OPEN_H = 10,
   CLOSE_H = 20;
+
+// ===== DERNIÈRE MODIFICATION : quartiers de livraison et frais (à modifier ici) =====
+// Tarif par défaut (4 000 Ar) = FRAIS_LIVRAISON_DEFAUT ci-dessus, pour tout quartier absent des 2 listes ci-dessous.
+// « Autre quartier » : pas de tarif automatique, les frais sont confirmés sur WhatsApp.
+const AUTRE_QUARTIER = "Autre quartier";
+const QUARTIERS = [
+  "Ambalakisoa",
+  "Ambalamanasy",
+  "Ambohijafy",
+  "Ampasimazava",
+  "Analakininina",
+  "Andranomadio",
+  "Androranga",
+  "Anjoma",
+  "Ankirihiry",
+  "Barikadimy",
+  "Bazar Be",
+  "Bazar Kely",
+  "Cité CANADA",
+  "Concentrix",
+  "Darafify",
+  "Dépôt 4 ème",
+  "Epp Tsiry",
+  "Gare routière",
+  "Hôpital Be",
+  "Mangarivotra",
+  "Mangarano",
+  "Morafeno",
+  "Morarano",
+  "Poisson d'Or ou Boulevard Ratsimilaho",
+  "Tanambao V",
+  "Tanambao verrerie",
+  "Tanamakoa",
+  "Tanandava",
+  "Trano Mora",
+  "Autre quartier",
+];
+const QUARTIERS_3000 = new Set([
+  "Tanambao V",
+  "Gare routière",
+  "Bazar Kely",
+  "Bazar Be",
+  "Ampasimazava",
+  "Tanamakoa",
+  "Poisson d'Or ou Boulevard Ratsimilaho",
+  "Hôpital Be",
+  "Epp Tsiry",
+  "Analakininina",
+]);
+const QUARTIERS_5000 = new Set([
+  "Ambalamanasy",
+  "Darafify",
+  "Concentrix",
+  "Tanandava",
+  "Trano Mora",
+]);
+let quartierSel = null; // quartier choisi dans la liste (null = aucun choix)
+// Retourne les frais en Ar, ou null si « Autre quartier » (à confirmer sur WhatsApp)
+function fraisQuartier(q) {
+  if (q === AUTRE_QUARTIER) return null;
+  if (QUARTIERS_3000.has(q)) return 3000;
+  if (QUARTIERS_5000.has(q)) return 5000;
+  return FRAIS_LIVRAISON_DEFAUT;
+}
 
 // DERNIÈRE MODIFICATION : prix des offres et tacos imposé (à changer ici)
 const PRIX_OFFRE_2_TACOS = 22000,
@@ -80,7 +144,14 @@ const COL = {
   "Pao et Pf": ["#ffcfb0", "#d9692b"],
   Boissons: ["#cfe8f7", "#6fb1da"],
 };
-const CATS = ["Tous", "Pizzas", "Tacos", "Paninis et Gratin", "Sandwichs", "Pao et Pf"];
+const CATS = [
+  "Tous",
+  "Pizzas",
+  "Tacos",
+  "Paninis et Gratin",
+  "Sandwichs",
+  "Pao et Pf",
+];
 // DERNIÈRE MODIFICATION : emojis des onglets
 const TAB_EMO = {
   Tous: "🍽️",
@@ -112,18 +183,18 @@ const PLATS = [
     [
       "Pizza 4fromages",
       "Origan, fromage qui rit,Sauce tomate, fromages locale, cheddar,mozzarella",
-      21000,
+      23000,
     ],
     [
       "Pizza Bolognaise",
       "Viande hachée, Sauce tomate, oignon, origan, fromage locale,",
-      23000,
+      22000,
       "Nouveau",
     ],
     [
       "Pizza Fermière",
       "Sauce tomate, poulet, tomate, poivron, origan, fromage locale",
-      22000,
+      23000,
     ],
     [
       "Pizza Carnivore",
@@ -142,32 +213,93 @@ const PLATS = [
     ],
   ]),
   ...M("Tacos", "ta", "🌮", [
-    ["Tacos poulet", "Poulet mariné, fromage locale, frites, sauce", 9000, "Populaire"],
-    ["Tacos Carnivore", "Frites, sauce, fromage locale, Charcuterie bœuf", 9000],
-    ["Tacos mixte", "Poulet et charcuterie bœuf,fites, sauce, fromage locale", 11000],
-    ["Tacos 2fromages", "Sauce, Poulet/charcuterie bœuf , frites, fromage locale + fromage qui rit", 13000],
-    ["Tacos 4 fromages", "Poulet et charcuterie bœuf , frites, sauce, fromage locale + fromage qui rit + cheddar +  mozzarella", 14000],
-    ["Croque madame", "Pain de mie, œuf sur plat, charcuterie bœuf, fromage, sauce", 8500, "Nouveau"],
+    [
+      "Tacos poulet",
+      "Poulet mariné, fromage locale, frites, sauce",
+      10000,
+      "Populaire",
+    ],
+    [
+      "Tacos Carnivore",
+      "Frites, sauce, fromage locale, Charcuterie bœuf",
+      9000,
+    ],
+    [
+      "Tacos mixte",
+      "Poulet et charcuterie bœuf,fites, sauce, fromage locale",
+      11000,
+    ],
+    [
+      "Tacos 2fromages",
+      "Sauce, Poulet/charcuterie bœuf , frites, fromage locale + fromage qui rit",
+      13000,
+    ],
+    [
+      "Tacos 4 fromages",
+      "Poulet et charcuterie bœuf , frites, sauce, fromage locale + fromage qui rit + cheddar +  mozzarella",
+      15000,
+    ],
+    [
+      "Croque madame",
+      "Pain de mie, œuf sur plat, charcuterie bœuf, fromage, sauce",
+      8500,
+      "Nouveau",
+    ],
     ["Croque monsieur", "Pain de mie, charcuterie bœuf, fromage , sauce", 7000],
   ]),
   ...M("Paninis et Gratin", "pa", "🥪", [
-    ["Panini Gourmande", "Charcuterie bœuf,  salade, fromage locale, tomate, sauce", 8000],
-    ["Panini 2fromages", "Poulet, tomate, sauce, salade, charcuterie bœuf, fromage locale + fromage qui rit", 12000, "Populaire"],
+    [
+      "Panini Gourmande",
+      "Charcuterie bœuf,  salade, fromage locale, tomate, sauce",
+      8000,
+    ],
+    [
+      "Panini 2fromages",
+      "Poulet, tomate, sauce, salade, charcuterie bœuf, fromage locale + fromage qui rit",
+      11000,
+      "Populaire",
+    ],
     ["Gratin Macaroni", "Macaroni, charcuterie,fromage local, bechamel", 8000],
   ]),
   // DERNIÈRE MODIFICATION : Sandwichs placés avant "Pao et Pf" (ancien Burgers)
   ...M("Sandwichs", "sa", "🥖", [
-    ["Sandwich Kebab", "Viande, tomate, salade, , fromage locale, oignon, mayonnaise", 9000],
-    ["Sandwich poulet", "Poulet, tomate, salade, mayonnaise, oignon, fromage locale", 9000],
-    ["Sandwich Mixte", "Tomate, salade, mayonnaise, oignon, fromage locale, Viande, poulet", 11000],
-    ["Sandwich Géant", "Sandwich 1 mètre : Viande, nuggets poulet , salade, oignon, mayonnaise, poulet, fromage", 26000,"un jour avant"],
+    [
+      "Sandwich Kebab",
+      "Viande, tomate, salade, , fromage locale, oignon, mayonnaise",
+      9000,
+    ],
+    [
+      "Sandwich poulet",
+      "Poulet, tomate, salade, mayonnaise, oignon, fromage locale",
+      10000,
+    ],
+    [
+      "Sandwich Mixte",
+      "Tomate, salade, mayonnaise, oignon, fromage locale, Viande, poulet",
+      11000,
+    ],
+    [
+      "Sandwich Géant",
+      "Sandwich 1 mètre : Viande, nuggets poulet , salade, oignon, mayonnaise, poulet, fromage",
+      26000,
+      "un jour avant",
+    ],
   ]),
   ...M("Pao et Pf", "bu", "🍔", [
     ["Pomme frite", "Frites, sauce, mayonnaise", 4000, "Populaire"],
-    ["Nuggets poulet + Frite", "Nuggets poulet, mayonnaise, frites, sauce", 9000],
+    [
+      "Nuggets poulet + Frite",
+      "Nuggets poulet, mayonnaise, frites, sauce",
+      9000,
+    ],
     ["Fromage Pané + Frite", "Frites, fromage Pané, sauce, mayonnaise", 9000],
     ["Pao au poulet", "Poulets, champignions, sauce", 2000, "Nouveau"],
-    ["Pao au fromage", "Fromage locale, poulets, sauce, champignions", 2500, "Populaire"],
+    [
+      "Pao au fromage",
+      "Fromage locale, poulets, sauce, champignions",
+      2500,
+      "Populaire",
+    ],
   ]),
 ];
 
@@ -225,7 +357,7 @@ const TAILLES_EAU = {
 };
 const BOISSONS = [
   { id: "d1", n: "Eau minérale", e: "💧", p: 0, from: 2000, g: [TAILLES_EAU] },
- {
+  {
     id: "d2",
     n: "Boisson Star",
     e: "🥤",
@@ -266,7 +398,11 @@ const BOISSONS = [
   },
 ].map((x) => ({ ...x, c: "Boissons", d: "", b: "" }));
 
-const ALL = [...OFFRES, ...PLATS, ...BOISSONS.filter(x=>x.id!=="d1"&&x.id!=="d2")];
+const ALL = [
+  ...OFFRES,
+  ...PLATS,
+  ...BOISSONS.filter((x) => x.id !== "d1" && x.id !== "d2"),
+];
 function disponible(x) {
   if (!x) return false;
   if (estEpuise(x.id)) return false;
@@ -341,10 +477,8 @@ function renderMenu() {
   );
   //const drinks = BOISSONS.filter((x) => !s || x.n.toLowerCase().includes(s));
   const drinks = BOISSONS.filter(
-    x=>
-      x.id !=="d1"&&
-      x.id !=="d2"&&
-      (!s|| x.n.toLowerCase().includes(s))
+    (x) =>
+      x.id !== "d1" && x.id !== "d2" && (!s || x.n.toLowerCase().includes(s)),
   );
   let h = "";
   if (cat === "Tous" && !s) {
@@ -367,8 +501,25 @@ function renderMenu() {
 
 function totals() {
   const sub = cart.reduce((s, l) => s + l.price * l.q, 0);
-  const fee = sub > 0 ? DELIVERY_FEE : 0;
-  return { sub, fee, tot: sub + fee, n: cart.reduce((s, l) => s + l.q, 0) };
+  // DERNIÈRE MODIFICATION : frais selon le quartier. mode = vide | choix (quartier pas encore choisi) | fixe | confirm (Autre quartier)
+  let fee = 0,
+    mode = "vide";
+  if (sub > 0) {
+    const f = quartierSel ? fraisQuartier(quartierSel) : undefined;
+    if (!quartierSel) mode = "choix";
+    else if (f === null) mode = "confirm";
+    else {
+      mode = "fixe";
+      fee = f;
+    }
+  }
+  return {
+    sub,
+    fee,
+    mode,
+    tot: sub + fee,
+    n: cart.reduce((s, l) => s + l.q, 0),
+  };
 }
 
 // DERNIÈRE MODIFICATION : lignes du panier en cartes (photo, nom, choix, boutons − / +, prix), panier vide accueillant, compteur, sauvegarde
@@ -390,13 +541,24 @@ function renderCart() {
     ? cart.map(lineHTML).join("")
     : `<div class="empty"><div class="e-ico">🛒</div><b>Votre panier est vide</b><p>Ajoutez un plat pour commencer.</p><button class="e-btn" type="button" onclick="goMenu()">Voir le menu</button></div>`;
   $("st").textContent = fmt(t.sub);
-  $("fee").textContent = fmt(t.fee);
-  $("tot").textContent = fmt(t.tot);
+  $("fee").textContent =
+    t.mode === "confirm"
+      ? "À confirmer sur WhatsApp"
+      : t.mode === "choix"
+        ? "Choisissez votre quartier"
+        : fmt(t.fee);
+  $("tot").textContent =
+    t.mode === "confirm"
+      ? "Sous réserve de confirmation des frais de livraison."
+      : fmt(t.tot);
+  $("tot").classList.toggle("tot-note", t.mode === "confirm");
   $("bn").textContent = t.n ? `Panier (${t.n})` : "Panier vide";
-  $("bt").textContent = fmt(t.tot);
+  $("bt").textContent =
+    fmt(t.tot) +
+    (t.mode === "confirm" || t.mode === "choix" ? " + livraison" : "");
   $("cn").textContent = t.n;
   $("cn").style.display = t.n ? "" : "none";
-  $("send").disabled = !cart.length;
+  majBoutonEnvoi();
   $("clear").style.display = cart.length ? "" : "none";
   store.set("cart", JSON.stringify(cart));
 }
@@ -625,6 +787,167 @@ function fieldErr(id, msg) {
 ["nom", "adr", "tel"].forEach((id) =>
   $(id).addEventListener("input", () => fieldErr(id, "")),
 );
+
+// ===== DERNIÈRE MODIFICATION : liste déroulante des quartiers (avec recherche), frais dynamiques, blocage du bouton =====
+function majBoutonEnvoi() {
+  const adrOk = !!$("adr").value.trim();
+  const manque = !cart.length
+    ? ""
+    : !quartierSel
+      ? "Choisissez votre quartier de livraison pour pouvoir commander."
+      : !adrOk
+        ? "Indiquez votre adresse précise pour pouvoir commander."
+        : "";
+  $("send").disabled = !cart.length || !quartierSel || !adrOk;
+  $("send-hint").textContent = manque;
+  $("send-hint").hidden = !manque;
+}
+function majLivraison() {
+  const info = $("fee-info");
+  if (!quartierSel) info.hidden = true;
+  else {
+    const f = fraisQuartier(quartierSel);
+    info.hidden = false;
+    info.classList.toggle("warn", f === null);
+    info.textContent =
+      f === null
+        ? "🚚 Frais de livraison à confirmer avec notre équipe sur WhatsApp"
+        : "🚚 Frais de livraison : " + fmt(f);
+  }
+  $("adr-wrap").hidden = !quartierSel;
+  renderCart();
+}
+const qIn = $("quartier"),
+  qList = $("q-list"),
+  qBox = $("f-quartier");
+let qActive = -1,
+  qShown = [];
+const normQ = (s) =>
+  s
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim();
+const qExact = () => QUARTIERS.find((q) => normQ(q) === normQ(qIn.value));
+const fraisLabel = (q) => {
+  const f = fraisQuartier(q);
+  return f === null ? "À confirmer" : fmt(f);
+};
+function qRender() {
+  const term = quartierSel && qIn.value === quartierSel ? "" : normQ(qIn.value);
+  qShown = QUARTIERS.filter((q) => normQ(q).includes(term));
+  qList.innerHTML = qShown.length
+    ? qShown
+        .map(
+          (q, i) =>
+            `<li role="option" id="q-o${i}" data-i="${i}" aria-selected="${q === quartierSel}">${q}</li>`,
+        )
+        .join("")
+    : `<li class="q-none" id="q-o0" role="option" data-none="1">Aucun quartier trouvé. <b>Choisir « ${AUTRE_QUARTIER} »</b></li>`;
+  qActive = -1;
+  qIn.removeAttribute("aria-activedescendant");
+}
+function qOpen() {
+  if (!qList.hidden) return;
+  qRender();
+  qList.hidden = false;
+  qIn.setAttribute("aria-expanded", "true");
+  qBox.classList.add("open");
+  const s = qList.querySelector('[aria-selected="true"]');
+  if (s) qList.scrollTop = Math.max(0, s.offsetTop - qList.clientHeight / 2);
+  try {
+    qList.scrollIntoView({ block: "nearest" });
+  } catch (e) {}
+}
+function qClose() {
+  qList.hidden = true;
+  qIn.setAttribute("aria-expanded", "false");
+  qBox.classList.remove("open");
+}
+function qMove(d) {
+  const lis = qList.querySelectorAll("li");
+  if (!lis.length || !qShown.length) return;
+  qActive = (qActive + d + lis.length) % lis.length;
+  lis.forEach((li, i) => li.classList.toggle("act", i === qActive));
+  const li = lis[qActive];
+  qIn.setAttribute("aria-activedescendant", li.id);
+  if (li.offsetTop < qList.scrollTop) qList.scrollTop = li.offsetTop;
+  else if (
+    li.offsetTop + li.offsetHeight >
+    qList.scrollTop + qList.clientHeight
+  )
+    qList.scrollTop = li.offsetTop + li.offsetHeight - qList.clientHeight;
+}
+function qChoose(q) {
+  quartierSel = q;
+  qIn.value = q;
+  qClose();
+  fieldErr("quartier", "");
+  store.set("quartier", q);
+  majLivraison();
+  $("adr").focus();
+}
+function qPick() {
+  if (qActive >= 0 && qShown[qActive]) return qChoose(qShown[qActive]);
+  const ex = qExact();
+  if (ex) return qChoose(ex);
+  if (qShown.length === 1) return qChoose(qShown[0]);
+}
+qIn.addEventListener("focus", () => {
+  qIn.select();
+  qOpen();
+});
+qIn.addEventListener("click", qOpen);
+qIn.addEventListener("input", () => {
+  if (quartierSel) {
+    quartierSel = null;
+    store.set("quartier", "");
+    majLivraison();
+  }
+  fieldErr("quartier", "");
+  if (qList.hidden) qOpen();
+  else qRender();
+});
+qIn.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+    e.preventDefault();
+    if (qList.hidden) qOpen();
+    else qMove(e.key === "ArrowDown" ? 1 : -1);
+  } else if (e.key === "Enter") {
+    if (!qList.hidden) {
+      e.preventDefault();
+      qPick();
+    }
+  } else if (e.key === "Escape") qClose();
+});
+$("q-toggle").addEventListener("click", () => {
+  if (qList.hidden) {
+    qIn.focus();
+    qOpen();
+  } else qClose();
+});
+qList.addEventListener("mousedown", (e) => e.preventDefault());
+qList.addEventListener("click", (e) => {
+  const li = e.target.closest("li");
+  if (!li) return;
+  if (li.dataset.none) qChoose(AUTRE_QUARTIER);
+  else qChoose(qShown[+li.dataset.i]);
+});
+qBox.addEventListener("focusout", () =>
+  setTimeout(() => {
+    if (qBox.contains(document.activeElement)) return;
+    qClose();
+    if (!quartierSel) {
+      const ex = qExact();
+      if (ex) qChoose(ex);
+      else if (qIn.value.trim())
+        fieldErr("quartier", "Choisissez votre quartier dans la liste.");
+    }
+  }, 120),
+);
+$("adr").addEventListener("input", majBoutonEnvoi);
+
 $("clear").onclick = () => {
   if (confirm("Vider tout le panier ?")) {
     cart = [];
@@ -663,7 +986,7 @@ function renderLast() {
   const o = lastOrder;
   $("last").innerHTML = !o
     ? ""
-    : `<div class="lastc ${o.sent ? "ok" : "wait"}"><b>🧾 Dernière commande : ${o.oid}</b><span>${o.heure} · ${fmt(o.total)} · ${o.sent ? "✅ Envoyée" : "⚠️ Envoi non confirmé"}</span><div class="lacts">${o.sent ? "" : `<button type="button" onclick="reopen()">Rouvrir WhatsApp</button>`}<button type="button" onclick="copyBtn(this)">📋 Copier</button></div></div>`;
+    : `<div class="lastc ${o.sent ? "ok" : "wait"}"><b>🧾 Dernière commande : ${o.oid}</b><span>${o.heure} · ${fmt(o.total)}${o.aConfirmer ? " + livraison à confirmer" : ""} · ${o.sent ? "✅ Envoyée" : "⚠️ Envoi non confirmé"}</span><div class="lacts">${o.sent ? "" : `<button type="button" onclick="reopen()">Rouvrir WhatsApp</button>`}<button type="button" onclick="copyBtn(this)">📋 Copier</button></div></div>`;
 }
 function showDone(mode) {
   clearTimeout(remT);
@@ -732,22 +1055,31 @@ $("send").onclick = () => {
   }
   const telChiffres = tel.replace(/\D/g, "");
   const eNom = nom ? "" : "Entrez votre nom.";
-  const eAdr = adr ? "" : "Entrez votre adresse de livraison.";
+  // DERNIÈRE MODIFICATION : quartier choisi dans la liste + adresse précise, tous les deux obligatoires
+  const eQuartier =
+    quartierSel && QUARTIERS.includes(quartierSel)
+      ? ""
+      : "Choisissez votre quartier dans la liste.";
+  const eAdr = adr
+    ? ""
+    : "Précisez votre adresse exacte (rue, numéro, repère...).";
   const eTel = !tel
     ? "Entrez votre numéro de téléphone."
     : telChiffres.length < 9 || telChiffres.length > 13
       ? "Numéro invalide (ex : 034 12 345 67)."
       : "";
   fieldErr("nom", eNom);
+  fieldErr("quartier", eQuartier);
   fieldErr("adr", eAdr);
   fieldErr("tel", eTel);
-  if (eNom || eAdr || eTel) {
-    $(eNom ? "nom" : eAdr ? "adr" : "tel").focus();
+  if (eNom || eQuartier || eAdr || eTel) {
+    $(eNom ? "nom" : eQuartier ? "quartier" : eAdr ? "adr" : "tel").focus();
     return;
   }
   $("err").textContent = "";
   store.set("nom", nom);
   store.set("adr", adr);
+  store.set("quartier", quartierSel);
   store.set("tel", tel);
   const t = totals();
   const oid = newOrderId();
@@ -760,8 +1092,12 @@ $("send").onclick = () => {
   m += cart
     .map((l) => `• ${l.q} x ${l.label} = ${fmt(l.price * l.q)}`)
     .join("\n");
-  m += `\n\nSous-total : ${fmt(t.sub)}\nLivraison : ${fmt(t.fee)}\n*Total : ${fmt(t.tot)}*\n\n`;
-  m += `Nom : ${nom}\nAdresse : ${adr}\n`;
+  // DERNIÈRE MODIFICATION : frais selon le quartier ; « Autre quartier » = frais à confirmer, aucun montant inventé
+  if (t.mode === "confirm")
+    m += `\n\n🚚 Livraison : À CONFIRMER AVEC LE CLIENT.\n*💰 Total produits : ${fmt(t.sub)}*\n⚠️ Frais de livraison non inclus dans le total définitif.\n\n`;
+  else
+    m += `\n\nSous-total : ${fmt(t.sub)}\nLivraison : ${fmt(t.fee)}\n*Total : ${fmt(t.tot)}*\n\n`;
+  m += `Nom : ${nom}\n📍 Quartier : ${quartierSel}\nAdresse précise : ${adr}\n`;
   if (tel) m += `Autre numéro : ${tel}\n`;
   if (pos)
     m += `Position GPS : https://maps.google.com/?q=${pos.latitude},${pos.longitude}\n`;
@@ -769,7 +1105,15 @@ $("send").onclick = () => {
   m += `\nPaiement : ${pay}`;
   const url =
     "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(m);
-  lastOrder = { oid, heure, total: t.tot, m, url, sent: false };
+  lastOrder = {
+    oid,
+    heure,
+    total: t.tot,
+    aConfirmer: t.mode === "confirm",
+    m,
+    url,
+    sent: false,
+  };
   store.set("last", JSON.stringify(lastOrder));
   renderLast();
   window.open(url, "_blank");
@@ -808,4 +1152,13 @@ if (
   lastOrder = null;
 renderLast();
 $("dn-num").textContent = TEL_AFFICHE;
+// DERNIÈRE MODIFICATION : on retrouve le quartier choisi si le client recharge la page
+{
+  const qs = store.get("quartier");
+  if (QUARTIERS.includes(qs)) {
+    quartierSel = qs;
+    qIn.value = qs;
+  }
+}
+majLivraison();
 refresh();
